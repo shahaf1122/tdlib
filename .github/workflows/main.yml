@@ -37,15 +37,17 @@ jobs:
           CC=aarch64-linux-gnu-gcc ./configure --static --prefix=$HOME/static-libs
           make
           make install
-
-      - name: Build OpenSSL (Static)
+          
+      - name: Build OpenSSL 3.x (Static)
         run: |
           wget https://www.openssl.org/source/openssl-3.4.0.tar.gz
           tar -xzvf openssl-3.4.0.tar.gz
           cd openssl-3.4.0
-          ./Configure linux-aarch64 no-shared --prefix=$HOME/static-libs/openssl
-          make
+          # Explicitly set the target architecture to aarch64 for OpenSSL 3.x
+          ./config --prefix=$HOME/static-libs/openssl --libdir=$HOME/static-libs/openssl/lib no-shared
+          make -j$(nproc)
           make install
+
 
       - name: Build TDLib (Static with musl)
         run: |
