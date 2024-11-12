@@ -1,12 +1,7 @@
 name: Build TDLib for CoreELEC (Standalone)
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:  # This allows you to manually trigger the job
 
 jobs:
   build:
