@@ -43,12 +43,13 @@ jobs:
           wget https://www.openssl.org/source/openssl-1.1.1.tar.gz
           tar -xzvf openssl-1.1.1.tar.gz
           cd openssl-1.1.1
-          # Clean any existing build artifacts
-          make clean
+          # Optional: Remove previous build artifacts manually (if any)
+          rm -rf $HOME/static-libs/openssl
           # Configure OpenSSL for ARM64 architecture
           ./Configure linux-aarch64 no-shared --prefix=$HOME/static-libs/openssl
           make -j$(nproc)
           make install
+
 
 
 
