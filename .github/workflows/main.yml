@@ -34,9 +34,9 @@ jobs:
           wget https://zlib.net/zlib-1.3.1.tar.gz
           tar -xzvf zlib-1.3.1.tar.gz
           cd zlib-1.3.1
-          CC=aarch64-linux-gnu-gcc ./configure --static
+          CC=aarch64-linux-gnu-gcc ./configure --static --prefix=$HOME/static-libs
           make
-          make install PREFIX=$HOME/static-libs/zlib
+          make install
 
       - name: Build OpenSSL (Static)
         run: |
@@ -59,7 +59,7 @@ jobs:
                 -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc \
                 -DCMAKE_FIND_ROOT_PATH=$HOME/static-libs \
                 -DOPENSSL_ROOT_DIR=$HOME/static-libs/openssl \
-                -DZLIB_ROOT=$HOME/static-libs/zlib \
+                -DZLIB_ROOT=$HOME/static-libs \
                 -DCMAKE_EXE_LINKER_FLAGS="-static -static-libgcc -static-libstdc++" \
                 ..
           cmake --build . --target install -- -j$(nproc)
