@@ -38,15 +38,18 @@ jobs:
           make
           make install
           
-      - name: Build OpenSSL 3.x (Static)
+      - name: Build OpenSSL (Static for ARM64)
         run: |
-          wget https://www.openssl.org/source/openssl-3.4.0.tar.gz
-          tar -xzvf openssl-3.4.0.tar.gz
-          cd openssl-3.4.0
-          # Explicitly set the target architecture to aarch64 for OpenSSL 3.x
-          ./config --prefix=$HOME/static-libs/openssl --libdir=$HOME/static-libs/openssl/lib no-shared
+          wget https://www.openssl.org/source/openssl-1.1.1.tar.gz
+          tar -xzvf openssl-1.1.1.tar.gz
+          cd openssl-1.1.1
+          # Clean any existing build artifacts
+          make clean
+          # Configure OpenSSL for ARM64 architecture
+          ./Configure linux-aarch64 no-shared --prefix=$HOME/static-libs/openssl
           make -j$(nproc)
           make install
+
 
 
       - name: Build TDLib (Static with musl)
