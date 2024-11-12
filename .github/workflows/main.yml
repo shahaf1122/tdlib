@@ -68,9 +68,9 @@ jobs:
         run: |
           cd td/tdlib
           tar -czvf tdlib-coreelec-standalone.tar.gz *
-        # Save the build artifact
+
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: tdlib-coreelec-standalone
           path: td/tdlib/tdlib-coreelec-standalone.tar.gz
