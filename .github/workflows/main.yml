@@ -38,21 +38,30 @@ jobs:
           make
           make install
           
-      - name: Build OpenSSL 3.x (Static for ARM64)
+      - name: Build OpenSSL (Static for ARM64)
         run: |
-          wget https://www.openssl.org/source/openssl-3.4.0.tar.gz
-          tar -xzvf openssl-3.4.0.tar.gz
-          cd openssl-3.4.0
+          # Download OpenSSL source
+          wget https://www.openssl.org/source/openssl-1.1.1m.tar.gz
+          tar -xzvf openssl-1.1.1m.tar.gz
+          cd openssl-1.1.1m
+
+          # Clean up any old build artifacts
           rm -rf $HOME/static-libs/openssl
 
-          # Configure OpenSSL 3.x for ARM64
-          ./config --prefix=$HOME/static-libs/openssl --libdir=$HOME/static-libs/openssl/lib no-shared
+          # Configure OpenSSL for ARM64 explicitly
+          # This command assumes you want OpenSSL to be statically compiled for ARM64
+          ./config --prefix=$HOME/static-libs/openssl --openssldir=$HOME/static-libs/openssl/ssl no-shared
 
           # Compile OpenSSL
           make -j$(nproc)
 
           # Install OpenSSL
           make install
+
+          # Optionally: create symlinks to make OpenSSL the default on the system
+          sudo ln -s $HOME/static-libs/openssl/bin/openssl /usr/bin/openssl
+          sudo ln -s $HOME/static-libs/openssl/bin/c_rehash /usr/bin/c_rehash
+
 
 
 
