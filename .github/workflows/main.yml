@@ -44,9 +44,16 @@ jobs:
           tar -xzvf openssl-3.4.0.tar.gz
           cd openssl-3.4.0
           rm -rf $HOME/static-libs/openssl
+
+          # Configure OpenSSL 3.x for ARM64
           ./config --prefix=$HOME/static-libs/openssl --libdir=$HOME/static-libs/openssl/lib no-shared
+
+          # Compile OpenSSL
           make -j$(nproc)
+
+          # Install OpenSSL
           make install
+
 
 
 
